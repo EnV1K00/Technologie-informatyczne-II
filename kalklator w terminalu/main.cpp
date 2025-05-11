@@ -1,45 +1,48 @@
-#include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-void usage(const char *program_name) {
-    printf("Sposob uzycia: %s \n", program_name);
-    printf("Operator: +, -, *, /\n");
+void usage(char *program_name) {
+    printf("Użycie: %s <liczba1> <operacja> <liczba2>\n", program_name);
+    printf("Dostępne operacje: + -\n");
     exit(1);
 }
 
-
-double calculate(double num1, double num2, char op) {
-    switch (op) {
-        case '+': return num1 + num2;
-        case '-': return num1 - num2;
-        case '*': return num1 * num2;
-        case '/':
-            if (num2 == 0) {
-                printf("Blad: dzielenie przez zero!\n");
-                exit(1);
-            }
-            return num1 / num2;
-        default:
-            printf("Blad: nieznany operator '%c'.\n", op);
-            exit(1);
-    }
-}
-
-int main(int argc, char const *argv[]) {
+int main(int argc, char *argv[]) {
     if (argc != 4) {
         usage(argv[0]);
     }
 
-
-    double num1 = atof(argv[1]);
-    double num2 = atof(argv[3]);
+    int a = atoi(argv[1]);
+    int b = atoi(argv[3]);
     char op = argv[2][0];
+    int result;
 
-    double result = calculate(num1, num2, op);
+    switch (op) {
+        case '+':
+            result = a + b;
+            printf("%d + %d = %d\n", a, b, result);
+            break;
+        case '-':
+            result = a - b;
+            printf("%d - %d = %d\n", a, b, result);
+            break;
+        case '*':
+            result = a * b;
+            printf("%d * %d = %d\n", a, b, result);
+            break;
+        case '/':
+            if (b == 0) {
+                printf("Błąd: dzielenie przez zero!\n");
+                return 1;
+            }
+            result = a / b;
+            printf("%d / %d = %d\n", a, b, result);
+            break;
 
-    printf("Wynik: %.2f\n", result);
+        default:
+            usage(argv[0]);
+    }
 
     return 0;
 }
